@@ -8,45 +8,68 @@ package models;
  *
  * @author alexia
  */
-import java.time.LocalDate;
+import java.sql.Date;
 
-public class CredencialAcceso {
+public class CredencialAcceso extends Base {
     private Integer idCredencial;
     private Integer idUsuario;
-    private LocalDate fechaCreacion;
+    private Date fechaCreacion;
     private String contrasenia;
     private Boolean eliminado;
 
-
-    public CredencialAcceso() {}
-
-    public CredencialAcceso(Integer idCredencial, Integer idUsuario, LocalDate fechaCreacion, String contrasenia, Boolean eliminado) {
-        this.idCredencial = idCredencial;
+    public CredencialAcceso(Integer idCredencial, Integer idUsuario,
+            Date fechaCreacion,
+            String contrasenia) {
+        super(idCredencial, false);
         this.idUsuario = idUsuario;
         this.fechaCreacion = fechaCreacion;
         this.contrasenia = contrasenia;
+    }
+
+    public CredencialAcceso() {
+        super();
+    }
+
+    public Integer getIdCredencial() {
+        return idCredencial;
+    }
+
+    public void setIdCredencial(Integer idCredencial) {
+        this.idCredencial = idCredencial;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
         this.eliminado = eliminado;
     }
 
-    public Integer getIdCredencial() { return idCredencial; }
-    public void setIdCredencial(Integer idCredencial) { this.idCredencial = idCredencial; }
-
-    public Integer getIdUsuario() { return idUsuario; }
-    public void setIdUsuario(Integer idUsuario) { this.idUsuario = idUsuario; }
-
-    public LocalDate getFechaCreacion() { return fechaCreacion; }
-    public void setFechaCreacion(LocalDate fechaCreacion) { this.fechaCreacion = fechaCreacion; }
-
-    public String getContrasenia() { return contrasenia; }
-    public void setContrasenia(String contrasenia) { this.contrasenia = contrasenia; }
-
-    public Boolean getEliminado() {
-    return eliminado;
-}
-
-    public void setEliminado(Boolean eliminado) {
-    this.eliminado = eliminado;
-}
     @Override
     public String toString() {
         return "CredencialAcceso [id=" + idCredencial + ", idUsuario=" + idUsuario + "]";

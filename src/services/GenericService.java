@@ -1,13 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package services;
+
+import java.util.List;
 
 /**
  *
- * @author alexia
+ * @author Facundo Auciello (Comisión Ag25-2C 07)
+ * @author Ayelen Etchegoyen (Comisión Ag25-2C 07)
+ * @author Alexia Rubin (Comisión Ag25-2C 05)
+ * @author María Victoria Volpe (Comisión Ag25-2C 09)
  */
-public class GenericService {
-    
+
+public interface GenericService<T> {
+    void insertar(T entidad) throws Exception;
+
+    void actualizar(T entidad) throws Exception;
+
+    void eliminar(int id) throws Exception;
+
+    T getById(int id) throws Exception;
+
+    List<T> getAll() throws Exception;
+
+    void recuperar(int id) throws Exception;
 }

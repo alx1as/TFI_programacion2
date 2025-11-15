@@ -61,7 +61,7 @@ public class UsuarioService implements GenericService<Usuario> {
         validateUsuarioUnique(usuario.getUsuario(), usuario.getIdUsuario());
         validateEmailUnique(usuario.getEmail(), usuario.getIdUsuario());
 
-        usuarioDao.insertar(usuario);
+        usuarioDao.crear(usuario);
     }
 
     /**
@@ -84,7 +84,7 @@ public class UsuarioService implements GenericService<Usuario> {
         try (TransactionManager txManager = new TransactionManager(conn)) {
 
             txManager.startTransaction();
-            usuarioDao.insertTx(usuario, conn);
+            usuarioDao.crear(usuario, conn);
             if (usuario.getCredencial() != null) {
                 if (usuario.getCredencial().getId() == 0) {
                     // obtener id_usuario recien insertado
@@ -135,7 +135,7 @@ public class UsuarioService implements GenericService<Usuario> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        usuarioDao.eliminar(id);
+        usuarioDao.eliminar((long)id);
     }
 
     /**
@@ -165,7 +165,7 @@ public class UsuarioService implements GenericService<Usuario> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        return usuarioDao.getById(id);
+        return usuarioDao.leer((long)id);
     }
 
     /**
@@ -176,7 +176,7 @@ public class UsuarioService implements GenericService<Usuario> {
      */
     @Override
     public List<Usuario> getAll() throws Exception {
-        return usuarioDao.getAll();
+        return usuarioDao.leerTodos();
     }
 
     /**
@@ -277,7 +277,7 @@ public class UsuarioService implements GenericService<Usuario> {
             throw new IllegalArgumentException("Los IDs deben ser mayores a 0");
         }
 
-        Usuario usuario = usuarioDao.getById(usuarioId);
+        Usuario usuario = usuarioDao.leer((long)usuarioId);
         if (usuario == null) {
             throw new IllegalArgumentException("Usuario no encontrado con ID: " + usuarioId);
         }

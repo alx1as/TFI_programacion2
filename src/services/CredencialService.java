@@ -37,7 +37,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
     @Override
     public void insertar(CredencialAcceso credencialAcceso) throws Exception {
         validateCredencialAcceso(credencialAcceso);
-        credencialAccesoDao.insertar(credencialAcceso);
+        credencialAccesoDao.crear(credencialAcceso);
     }
 
     /**
@@ -50,7 +50,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
      */
     public void insertarTx(CredencialAcceso credencialAcceso, Connection conn) throws Exception {
         validateCredencialAcceso(credencialAcceso);
-        credencialAccesoDao.insertTx(credencialAcceso, conn);
+        credencialAccesoDao.crear(credencialAcceso, conn);
     }
 
     /**
@@ -80,7 +80,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        credencialAccesoDao.eliminar(id);
+        credencialAccesoDao.eliminar((long)id);
     }
 
     /**
@@ -110,7 +110,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        return credencialAccesoDao.getById(id);
+        return credencialAccesoDao.leer((long)id);
     }
 
     /**
@@ -121,7 +121,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
      */
     @Override
     public List<CredencialAcceso> getAll() throws Exception {
-        return credencialAccesoDao.getAll();
+        return credencialAccesoDao.leerTodos();
     }
 
     /**

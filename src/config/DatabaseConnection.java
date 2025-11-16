@@ -20,7 +20,7 @@ public class DatabaseConnection {
 
     public static Connection conectar() {
         try {
-            return DriverManager.getConnection(URL, USUARIO, CONTRASENIA); 
+            return DriverManager.getConnection(URL, USUARIO, CONTRASENIA); //abre la conexión
             /*DriverManager.getConnection(...) establece la conexión la base de datos, necesita .jar*/  
         } catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage()); /*método de la clase SQLException-> devuelve un mensaje de error asociado a la excepción que ocurrió */
@@ -28,7 +28,7 @@ public class DatabaseConnection {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { // // método de prueba opcional
         Connection conn = conectar();
         if (conn != null) {
             System.out.println("Conexión exitosa.");

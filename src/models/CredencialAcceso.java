@@ -6,23 +6,16 @@ package models;
 
 import java.util.Date;
 
-/**
- *
- * @author alexia
- */
+
 
 public class CredencialAcceso extends Base {
 
-    private Integer idCredencial;
-    private Integer idUsuario;
+    private Integer idUsuario;        // FK
     private Date fechaCreacion;
     private String contrasenia;
-    private Boolean eliminado;
 
-    public CredencialAcceso(Integer idCredencial, Integer idUsuario,
-            Date fechaCreacion,
-            String contrasenia) {
-        super(idCredencial, false);
+    public CredencialAcceso(Integer id, Integer idUsuario, Date fechaCreacion, String contrasenia, boolean eliminado) {
+        super(id, eliminado); // id es el id_credencial de la BD
         this.idUsuario = idUsuario;
         this.fechaCreacion = fechaCreacion;
         this.contrasenia = contrasenia;
@@ -30,14 +23,6 @@ public class CredencialAcceso extends Base {
 
     public CredencialAcceso() {
         super();
-    }
-
-    public Integer getIdCredencial() {
-        return idCredencial;
-    }
-
-    public void setIdCredencial(Integer idCredencial) {
-        this.idCredencial = idCredencial;
     }
 
     public Integer getIdUsuario() {
@@ -64,16 +49,8 @@ public class CredencialAcceso extends Base {
         this.contrasenia = contrasenia;
     }
 
-    public Boolean getEliminado() {
-        return eliminado;
-    }
-
-    public void setEliminado(Boolean eliminado) {
-        this.eliminado = eliminado;
-    }
-
     @Override
     public String toString() {
-        return "CredencialAcceso [id=" + idCredencial + ", idUsuario=" + idUsuario + "]";
+        return "CredencialAcceso [id=" + getId() + ", idUsuario=" + idUsuario + "]";
     }
 }

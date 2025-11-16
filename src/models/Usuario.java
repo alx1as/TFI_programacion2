@@ -4,22 +4,18 @@
  */
 package models;
 
-/**
- *
- * @author alexia
- */
+
 public class Usuario extends Base {
-    private Integer idUsuario;
+
     private String nombre;
     private String apellido;
     private Integer edad;
     private String email;
     private String usuario;
-    private CredencialAcceso credencial; // relación 1:1 unidireccional
-    private Boolean eliminado;
+    private CredencialAcceso credencial; // relación 1:1
 
-    public Usuario(Integer idUsuario, String nombre, String apellido, Integer edad, String email, String usuario) {
-        super(idUsuario, false);
+    public Usuario(String nombre, String apellido, Integer edad, String email, String usuario) {
+        super(); // id lo asigna Base.java
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -29,14 +25,6 @@ public class Usuario extends Base {
 
     public Usuario() {
         super();
-    }
-
-    public Integer getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {
@@ -87,16 +75,9 @@ public class Usuario extends Base {
         this.credencial = credencial;
     }
 
-    public Boolean getEliminado() {
-        return eliminado;
-    }
-
-    public void setEliminado(Boolean eliminado) {
-        this.eliminado = eliminado;
-    }
-
     @Override
     public String toString() {
-        return "Usuario [id=" + idUsuario + ", nombre=" + nombre + ", email=" + email + ", usuario=" + usuario + "]";
+        return "Usuario [id=" + getId() + ", nombre=" + nombre + ", email=" + email + ", usuario=" + usuario + "]";
     }
 }
+

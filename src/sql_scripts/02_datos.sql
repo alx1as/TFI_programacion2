@@ -15,11 +15,7 @@ INSERT INTO credencialAcceso (id_usuario, fecha_creacion, contrasenia)
 VALUES 
 (1, CURDATE(), 'contrasegura123');
 
--- Ingreso al sistema
-INSERT INTO ingresarSistema (id_credencial, resultado)
-VALUES 
-(1, 'Exitoso');
 
 SELECT * FROM usuarios;
 SELECT * FROM credencialAcceso;
-SELECT * FROM ingresarSistema;
+

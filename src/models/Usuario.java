@@ -74,6 +74,8 @@ public class Usuario extends Base {
     public void setCredencial(CredencialAcceso credencial) {
         this.credencial = credencial;
     }
+    public void setIdUsuario(Integer id) { setId(id); }
+    public Integer getIdUsuario() { return getId(); }
 
     @Override
     public String toString() {

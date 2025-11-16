@@ -77,6 +77,9 @@ public class Usuario extends Base {
     public void setIdUsuario(Integer id) { setId(id); }
     public Integer getIdUsuario() { return getId(); }
 
+    public void setIdCredencial(Integer id) { setId(id); }
+public Integer getIdCredencial() { return getId(); }
+
     @Override
     public String toString() {
         return "Usuario [id=" + getId() + ", nombre=" + nombre + ", email=" + email + ", usuario=" + usuario + "]";

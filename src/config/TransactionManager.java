@@ -3,6 +3,13 @@ package config;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ *
+ * @author Facundo Auciello (Comisión Ag25-2C 07)
+ * @author Ayelen Etchegoyen (Comisión Ag25-2C 07)
+ * @author Alexia Rubin (Comisión Ag25-2C 05)
+ * @author María Victoria Volpe (Comisión Ag25-2C 09)
+ */
 public class TransactionManager implements AutoCloseable {
     private Connection conn;
     private boolean transactionActive;

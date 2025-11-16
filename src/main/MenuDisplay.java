@@ -37,7 +37,7 @@ public class MenuDisplay {
         System.out.println("2. Listar Todos");
         System.out.println("3. Buscar por ID");
         System.out.println("4. Actualizar Usuario");
-        System.out.println("5. Eliminar Usuario (logico)");
+        System.out.println("5. Eliminar Usuario");
         System.out.println("0. Volver");
         System.out.print("Ingrese una opcion: ");
     }
@@ -51,7 +51,7 @@ public class MenuDisplay {
         System.out.println("2. Listar Todas");
         System.out.println("3. Buscar por ID");
         System.out.println("4. Actualizar Credencial");
-        System.out.println("5. Eliminar Credencial (logico)");
+        System.out.println("5. Eliminar Credencial");
         System.out.println("0. Volver");
         System.out.print("Ingrese una opcion: ");
     }

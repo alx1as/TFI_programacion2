@@ -113,10 +113,10 @@ public class MenuHandler {
             String respuesta = scanner.nextLine().trim().toUpperCase();
             
             if (respuesta.equals("S")) {
-                System.out.print("Contrasenia (min 8 caracteres): ");
+                System.out.print("Contrasenia (min 9 caracteres): ");
                 String pass = scanner.nextLine();
                 if (pass.length() <= 8) {
-                    System.out.println("ADVERTENCIA: La contrasenia debe tener mas de 8 caracteres.");
+                    System.out.println("ADVERTENCIA: La contrasenia debe tener mas de 9 o mas caracteres.");
                     System.out.println("Usuario creado sin credencial.");
                     usuarioService.insertar(nuevoUsuario);
                 } else {
@@ -277,7 +277,7 @@ public class MenuHandler {
             
             if (confirmacion.equals("S")) {
                 usuarioService.eliminar(id);
-                System.out.println("EXITO: Usuario eliminado (baja logica).");
+                System.out.println("EXITO: Usuario eliminado.");
             } else {
                 System.out.println("Operacion cancelada.");
             }
@@ -485,7 +485,7 @@ public class MenuHandler {
             
             if (confirmacion.equals("S")) {
                 credencialService.eliminar(id);
-                System.out.println("EXITO: Credencial eliminada (baja logica).");
+                System.out.println("EXITO: Credencial eliminada.");
             } else {
                 System.out.println("Operacion cancelada.");
             }

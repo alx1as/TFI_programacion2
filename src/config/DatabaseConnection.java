@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/usuariocredencial";
     private static final String USUARIO = "root"; 
-    private static final String CONTRASENIA = "Alexia123!"; 
+    private static final String CONTRASENIA = "1234"; //Cambiar  el password segun el caso
 
     public static Connection conectar() {
         try {

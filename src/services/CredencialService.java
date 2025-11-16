@@ -95,7 +95,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        credencialAccesoDao.recuperar(id);
+        credencialAccesoDao.recuperar((long)id);
     }
 
     /**

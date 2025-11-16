@@ -8,18 +8,18 @@ package models;
  *
  * @author alexia
  */
-
 import java.time.LocalDateTime;
 
 public class IngresarSistema {
+
     private Integer idIngreso;
     private Integer idCredencial;
     private LocalDateTime fechaHoraIngreso;
     private String resultado;
     private Boolean eliminado;
 
-
-    public IngresarSistema() {}
+    public IngresarSistema() {
+    }
 
     public IngresarSistema(Integer idIngreso, Integer idCredencial, LocalDateTime fechaHoraIngreso, String resultado, Boolean eliminado) {
         this.idIngreso = idIngreso;
@@ -29,25 +29,46 @@ public class IngresarSistema {
         this.eliminado = eliminado;
     }
 
-    public Integer getIdIngreso() { return idIngreso; }
-    public void setIdIngreso(Integer idIngreso) { this.idIngreso = idIngreso; }
+    public Integer getIdIngreso() {
+        return idIngreso;
+    }
 
-    public Integer getIdCredencial() { return idCredencial; }
-    public void setIdCredencial(Integer idCredencial) { this.idCredencial = idCredencial; }
+    public void setIdIngreso(Integer idIngreso) {
+        this.idIngreso = idIngreso;
+    }
 
-    public LocalDateTime getFechaHoraIngreso() { return fechaHoraIngreso; }
-    public void setFechaHoraIngreso(LocalDateTime fechaHoraIngreso) { this.fechaHoraIngreso = fechaHoraIngreso; }
+    public Integer getIdCredencial() {
+        return idCredencial;
+    }
 
-    public String getResultado() { return resultado; }
-    public void setResultado(String resultado) { this.resultado = resultado; }
-    
+    public void setIdCredencial(Integer idCredencial) {
+        this.idCredencial = idCredencial;
+    }
+
+    public LocalDateTime getFechaHoraIngreso() {
+        return fechaHoraIngreso;
+    }
+
+    public void setFechaHoraIngreso(LocalDateTime fechaHoraIngreso) {
+        this.fechaHoraIngreso = fechaHoraIngreso;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
+
     public Boolean getEliminado() {
-    return eliminado;
-}
+        return eliminado;
+    }
 
     public void setEliminado(Boolean eliminado) {
-    this.eliminado = eliminado;
-}
+        this.eliminado = eliminado;
+    }
+
     @Override
     public String toString() {
         return "Ingreso [id=" + idIngreso + ", credencial=" + idCredencial + ", fechaHora=" + fechaHoraIngreso + ", resultado=" + resultado + "]";

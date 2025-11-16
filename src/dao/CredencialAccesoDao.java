@@ -23,7 +23,7 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
             stmt.setInt(1, cred.getIdUsuario());
 
             // LocalDate → java.sql.Date
-            stmt.setDate(2, cred.getFechaCreacion());
+            stmt.setDate(2, new java.sql.Date(cred.getFechaCreacion().getTime()));
 
             stmt.setString(3, cred.getContrasenia());
 
@@ -46,7 +46,7 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
             stmt.setInt(1, cred.getIdUsuario());
 
             // LocalDate → java.sql.Date
-            stmt.setDate(2, cred.getFechaCreacion());
+            stmt.setDate(2,  new java.sql.Date(cred.getFechaCreacion().getTime()));
 
             stmt.setString(3, cred.getContrasenia());
 
@@ -133,7 +133,7 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
             stmt.setInt(1, cred.getIdUsuario());
 
             // LocalDate → java.sql.Date
-            stmt.setDate(2, cred.getFechaCreacion());
+            stmt.setDate(2,  new java.sql.Date(cred.getFechaCreacion().getTime()));
 
             stmt.setString(3, cred.getContrasenia());
             stmt.setInt(4, cred.getIdCredencial());
@@ -149,6 +149,21 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
     @Override
     public void eliminar(Long id) throws Exception {
         String sql = "UPDATE credencialAcceso SET eliminado = TRUE WHERE id_credencial = ?";
+
+        try (Connection conn = DatabaseConnection.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
+    }
+    /* ====================================================
+       MÉTODO RECUPERAR 
+       ==================================================== */
+    
+    @Override
+    public void recuperar (Long id) throws Exception {
+        String sql = "UPDATE credencialAcceso SET eliminado = FALSE WHERE id_credencial = ?";
 
         try (Connection conn = DatabaseConnection.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -4,13 +4,15 @@
  */
 package models;
 
+import java.util.Date;
+
 /**
  *
  * @author alexia
  */
-import java.sql.Date;
 
 public class CredencialAcceso extends Base {
+
     private Integer idCredencial;
     private Integer idUsuario;
     private Date fechaCreacion;

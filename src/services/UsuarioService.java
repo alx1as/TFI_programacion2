@@ -150,7 +150,7 @@ public class UsuarioService implements GenericService<Usuario> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        usuarioDao.recuperar(id);
+        usuarioDao.recuperar((long)id);
     }
 
     /**

@@ -48,6 +48,13 @@ public class CredencialAcceso extends Base {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+public Integer getIdCredencial() {
+    return getId();
+}
+
+public void setIdCredencial(Integer id) {
+    setId(id);
+}
 
     @Override
     public String toString() {

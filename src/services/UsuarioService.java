@@ -265,7 +265,7 @@ public class UsuarioService implements GenericService<Usuario> {
     private void validateUsuarioUnique(String usuario, Integer usuarioId) throws Exception {
         Usuario existente = usuarioDao.buscarPorUsuario(usuario);
         if (existente != null) {
-            if (usuarioId == null || existente.getIdUsuario() != usuarioId) {
+            if (usuarioId == null || !usuarioId.equals(existente.getIdUsuario())) {
                 throw new IllegalArgumentException("Ya existe un usuario con el nombre de usuario: " + usuario);
             }
         }
@@ -380,7 +380,7 @@ public class UsuarioService implements GenericService<Usuario> {
     private void validateEmailUnique(String email, Integer usuarioId) throws Exception {
         Usuario existente = usuarioDao.buscarPorEmail(email);
         if (existente != null) {
-            if (usuarioId == null || existente.getIdUsuario() != usuarioId) {
+            if (usuarioId == null || !usuarioId.equals(existente.getIdUsuario())) {
                 throw new IllegalArgumentException("Ya existe un usuario con el email: " + email);
             }
         }

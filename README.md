@@ -46,9 +46,13 @@ src/
 Ejecutar los scripts SQL en MySQL en el siguiente orden:
     - Primero: `src/sql_scripts/01_estructura.sql` (crea la base de datos y las tablas)
     - Segundo: `src/sql_scripts/02_datos.sql` (inserta datos de ejemplo)
-    
+    - 
+2. Agregar el conector MySQL al proyecto:
+Descargar MySQL Connector/J (Platform Independent) desde dev.mysql.com e incorporarlo al proyecto:
+En NetBeans: Libraries → Add JAR/Folder → seleccionar mysql-connector-j-8.x.x.jar
+Verificar que el archivo queda dentro de la carpeta Libraries para habilitar la conexión JDBC.
 
-2. **Configurar credenciales de BD**:
+3. **Configurar credenciales de BD**:
    - Editar `src/config/DatabaseConnection.java`
    - Modificar usuario y contraseña según tu configuración MySQL:
      ```java
@@ -56,7 +60,7 @@ Ejecutar los scripts SQL en MySQL en el siguiente orden:
      private static final String CONTRASENIA = "tu_password";
      ```
 
-3. **Compilar y ejecutar**:
+4. **Compilar y ejecutar**:
     - Correr la clase `main.Main`
 
 ## Uso

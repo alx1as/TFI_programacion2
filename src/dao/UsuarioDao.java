@@ -2,6 +2,8 @@ package dao;
 
 import config.DatabaseConnection;
 import java.util.List;
+
+import models.CredencialAcceso;
 import models.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
@@ -56,7 +58,7 @@ public class UsuarioDao implements GenericDao<Usuario> {
      * ====================================================
      */
     public Usuario leer(Long id) throws Exception {
-        String sql = "SELECT * FROM usuarios WHERE id_usuario = ? AND eliminado = FALSE";
+        String sql = "SELECT * FROM usuarios u LEFT JOIN credencialAcceso c ON c.id_usuario = u.id_usuario AND c.eliminado = FALSE WHERE u.id_usuario = ? AND u.eliminado = FALSE";
         Usuario u = null;
 
         try (Connection conn = DatabaseConnection.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -72,6 +74,16 @@ public class UsuarioDao implements GenericDao<Usuario> {
                     u.setEdad(rs.getInt("edad"));
                     u.setEmail(rs.getString("email"));
                     u.setUsuario(rs.getString("usuario"));
+
+                    int credencialId = rs.getInt("id_credencial");
+                    if (credencialId > 0 && !rs.wasNull()) {
+                        CredencialAcceso credencialAcceso = new CredencialAcceso();
+                        credencialAcceso.setIdCredencial(credencialId);
+                        credencialAcceso.setIdUsuario(rs.getInt("id_usuario"));
+                        credencialAcceso.setFechaCreacion(rs.getDate("fecha_creacion"));
+                        credencialAcceso.setContrasenia(rs.getString("contrasenia"));
+                        u.setCredencial(credencialAcceso);
+                    }
                 }
             }
         }
@@ -85,7 +97,7 @@ public class UsuarioDao implements GenericDao<Usuario> {
      */
     @Override
     public List<Usuario> leerTodos() throws Exception {
-        String sql = "SELECT * FROM usuarios WHERE eliminado = FALSE";
+        String sql = "SELECT * FROM usuarios u LEFT JOIN credencialAcceso c ON c.id_usuario = u.id_usuario AND c.eliminado = FALSE WHERE u.eliminado = FALSE";
 
         List<Usuario> lista = new ArrayList<>();
 
@@ -102,6 +114,15 @@ public class UsuarioDao implements GenericDao<Usuario> {
                 u.setEmail(rs.getString("email"));
                 u.setUsuario(rs.getString("usuario"));
 
+                int credencialId = rs.getInt("id_credencial");
+                if (credencialId > 0 && !rs.wasNull()) {
+                    CredencialAcceso credencialAcceso = new CredencialAcceso();
+                    credencialAcceso.setIdCredencial(credencialId);
+                    credencialAcceso.setIdUsuario(rs.getInt("id_usuario"));
+                    credencialAcceso.setFechaCreacion(rs.getDate("fecha_creacion"));
+                    credencialAcceso.setContrasenia(rs.getString("contrasenia"));
+                    u.setCredencial(credencialAcceso);
+                }
                 lista.add(u);
             }
         }
@@ -163,7 +184,7 @@ public class UsuarioDao implements GenericDao<Usuario> {
     }
 
     public Usuario buscarPorUsuario(String campoUsuario) throws Exception {
-        String sql = "SELECT * FROM usuarios WHERE usuario = ? AND eliminado = FALSE";
+        String sql = "SELECT * FROM usuarios u LEFT JOIN credencialAcceso c ON c.id_usuario = u.id_usuario AND c.eliminado = FALSE WHERE u.usuario = ? AND u.eliminado = FALSE";
         Usuario u = null;
 
         try (Connection conn = DatabaseConnection.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -179,6 +200,16 @@ public class UsuarioDao implements GenericDao<Usuario> {
                     u.setEdad(rs.getInt("edad"));
                     u.setEmail(rs.getString("email"));
                     u.setUsuario(rs.getString("usuario"));
+
+                    int credencialId = rs.getInt("id_credencial");
+                    if (credencialId > 0 && !rs.wasNull()) {
+                        CredencialAcceso credencialAcceso = new CredencialAcceso();
+                        credencialAcceso.setIdCredencial(credencialId);
+                        credencialAcceso.setIdUsuario(rs.getInt("id_usuario"));
+                        credencialAcceso.setFechaCreacion(rs.getDate("fecha_creacion"));
+                        credencialAcceso.setContrasenia(rs.getString("contrasenia"));
+                        u.setCredencial(credencialAcceso);
+                    }
                 }
             }
         }
@@ -186,7 +217,7 @@ public class UsuarioDao implements GenericDao<Usuario> {
     }
 
     public Usuario buscarPorEmail(String email) throws Exception {
-        String sql = "SELECT * FROM usuarios WHERE email = ? AND eliminado = FALSE";
+        String sql = "SELECT * FROM usuarios u LEFT JOIN credencialAcceso c ON c.id_usuario = u.id_usuario AND c.eliminado = FALSE WHERE u.email = ? AND u.eliminado = FALSE";
         Usuario u = null;
 
         try (Connection conn = DatabaseConnection.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -202,6 +233,16 @@ public class UsuarioDao implements GenericDao<Usuario> {
                     u.setEdad(rs.getInt("edad"));
                     u.setEmail(rs.getString("email"));
                     u.setUsuario(rs.getString("usuario"));
+
+                    int credencialId = rs.getInt("id_credencial");
+                    if (credencialId > 0 && !rs.wasNull()) {
+                        CredencialAcceso credencialAcceso = new CredencialAcceso();
+                        credencialAcceso.setIdCredencial(credencialId);
+                        credencialAcceso.setIdUsuario(rs.getInt("id_usuario"));
+                        credencialAcceso.setFechaCreacion(rs.getDate("fecha_creacion"));
+                        credencialAcceso.setContrasenia(rs.getString("contrasenia"));
+                        u.setCredencial(credencialAcceso);
+                    }
                 }
             }
         }
@@ -209,8 +250,7 @@ public class UsuarioDao implements GenericDao<Usuario> {
     }
 
     public List<Usuario> buscarPorNombreApellido(String filtro) throws Exception {
-        String sql = "SELECT * FROM usuarios " +
-                "WHERE nombre LIKE ? OR apellido LIKE ? AND eliminado = FALSE";
+        String sql = "SELECT * FROM usuarios u LEFT JOIN credencialAcceso c ON c.id_usuario = u.id_usuario AND c.eliminado = FALSE WHERE u.nombre LIKE ? OR u.apellido LIKE ? AND u.eliminado = FALSE";
 
         List<Usuario> lista = new ArrayList<>();
 
@@ -229,6 +269,15 @@ public class UsuarioDao implements GenericDao<Usuario> {
                     u.setEmail(rs.getString("email"));
                     u.setUsuario(rs.getString("usuario"));
 
+                    int credencialId = rs.getInt("id_credencial");
+                    if (credencialId > 0 && !rs.wasNull()) {
+                        CredencialAcceso credencialAcceso = new CredencialAcceso();
+                        credencialAcceso.setIdCredencial(credencialId);
+                        credencialAcceso.setIdUsuario(rs.getInt("id_usuario"));
+                        credencialAcceso.setFechaCreacion(rs.getDate("fecha_creacion"));
+                        credencialAcceso.setContrasenia(rs.getString("contrasenia"));
+                        u.setCredencial(credencialAcceso);
+                    }
                     lista.add(u);
                 }
             }

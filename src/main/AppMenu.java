@@ -5,39 +5,45 @@ import dao.UsuarioDao;
 import dao.CredencialAccesoDao;
 import services.UsuarioService;
 import services.CredencialService;
+
 /**
  *
- * @author faacu
+ * @author Facundo Auciello (Comisión Ag25-2C 07)
+ * @author Ayelen Etchegoyen (Comisión Ag25-2C 07)
+ * @author Alexia Rubin (Comisión Ag25-2C 05)
+ * @author María Victoria Volpe (Comisión Ag25-2C 09)
  */
+
 public class AppMenu {
-   
-/**
- * Orquestador principal del menu de la aplicacion.
- * Gestiona el ciclo de vida del menu y coordina todas las dependencias.
- */
+
+    /**
+     * Orquestador principal del menu de la aplicacion.
+     * Gestiona el ciclo de vida del menu y coordina todas las dependencias.
+     */
     private final Scanner scanner;
     private final MenuHandler menuHandler;
     private boolean running;
-    
+
     /**
-     * Constructor que inicializa la aplicacion con la cadena de dependencias completa.
+     * Constructor que inicializa la aplicacion con la cadena de dependencias
+     * completa.
      */
     public AppMenu() {
         this.scanner = new Scanner(System.in);
-        
+
         // Crear DAOs
         CredencialAccesoDao credencialDao = new CredencialAccesoDao();
         UsuarioDao usuarioDao = new UsuarioDao();
-        
+
         // Crear Services (con inyeccion de dependencias)
         CredencialService credencialService = new CredencialService(credencialDao);
         UsuarioService usuarioService = new UsuarioService(usuarioDao, credencialService);
-        
+
         // Crear MenuHandler con Services
         this.menuHandler = new MenuHandler(scanner, usuarioService, credencialService);
         this.running = true;
     }
-    
+
     /**
      * Punto de entrada de la aplicacion Java.
      */
@@ -45,13 +51,13 @@ public class AppMenu {
         AppMenu app = new AppMenu();
         app.run();
     }
-    
+
     /**
      * Loop principal del menu.
      */
     public void run() {
         System.out.println("\n*** BIENVENIDO AL SISTEMA ***");
-        
+
         while (running) {
             try {
                 MenuDisplay.mostrarMenuPrincipal();
@@ -61,11 +67,11 @@ public class AppMenu {
                 System.out.println("Entrada invalida. Por favor, ingrese un numero.");
             }
         }
-        
+
         System.out.println("\nGracias por usar el sistema. Adios!");
         scanner.close();
     }
-    
+
     /**
      * Procesa la opcion seleccionada por el usuario.
      */
@@ -82,4 +88,3 @@ public class AppMenu {
         }
     }
 }
-

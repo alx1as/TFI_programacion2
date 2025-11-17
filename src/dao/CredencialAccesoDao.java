@@ -4,21 +4,30 @@ import config.DatabaseConnection;
 import models.CredencialAcceso;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Facundo Auciello (Comisión Ag25-2C 07)
+ * @author Ayelen Etchegoyen (Comisión Ag25-2C 07)
+ * @author Alexia Rubin (Comisión Ag25-2C 05)
+ * @author María Victoria Volpe (Comisión Ag25-2C 09)
+ */
+
 public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
 
-    /* ====================================================
-       MÉTODO CREAR (CONEXIÓN INTERNA)
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO CREAR (CONEXIÓN INTERNA)
+     * ====================================================
+     */
     @Override
     public void crear(CredencialAcceso cred) throws Exception {
         String sql = "INSERT INTO credencialAcceso (id_usuario, fecha_creacion, contrasenia) VALUES (?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, cred.getIdUsuario());
 
@@ -30,14 +39,17 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next()) cred.setIdCredencial(rs.getInt(1));
+                if (rs.next())
+                    cred.setIdCredencial(rs.getInt(1));
             }
         }
     }
 
-    /* ====================================================
-       MÉTODO CREAR (CONEXIÓN EXTERNA → TRANSACCIÓN)
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO CREAR (CONEXIÓN EXTERNA → TRANSACCIÓN)
+     * ====================================================
+     */
     public void crear(CredencialAcceso cred, Connection conn) throws Exception {
         String sql = "INSERT INTO credencialAcceso (id_usuario, fecha_creacion, contrasenia) VALUES (?, ?, ?)";
 
@@ -46,29 +58,31 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
             stmt.setInt(1, cred.getIdUsuario());
 
             // LocalDate → java.sql.Date
-            stmt.setDate(2,  new java.sql.Date(cred.getFechaCreacion().getTime()));
+            stmt.setDate(2, new java.sql.Date(cred.getFechaCreacion().getTime()));
 
             stmt.setString(3, cred.getContrasenia());
 
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next()) cred.setIdCredencial(rs.getInt(1));
+                if (rs.next())
+                    cred.setIdCredencial(rs.getInt(1));
             }
         }
     }
 
-
-    /* ====================================================
-       MÉTODO LEER POR ID
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO LEER POR ID
+     * ====================================================
+     */
     @Override
     public CredencialAcceso leer(Long id) throws Exception {
         String sql = "SELECT * FROM credencialAcceso WHERE id_credencial = ? AND eliminado = FALSE";
         CredencialAcceso c = null;
 
         try (Connection conn = DatabaseConnection.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
 
@@ -89,18 +103,19 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
         return c;
     }
 
-
-    /* ====================================================
-       MÉTODO LEER TODOS
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO LEER TODOS
+     * ====================================================
+     */
     @Override
     public List<CredencialAcceso> leerTodos() throws Exception {
         String sql = "SELECT * FROM credencialAcceso WHERE eliminado = FALSE";
         List<CredencialAcceso> lista = new ArrayList<>();
 
         try (Connection conn = DatabaseConnection.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 CredencialAcceso c = new CredencialAcceso();
@@ -119,21 +134,22 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
         return lista;
     }
 
-
-    /* ====================================================
-       MÉTODO ACTUALIZAR
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO ACTUALIZAR
+     * ====================================================
+     */
     @Override
     public void actualizar(CredencialAcceso cred) throws Exception {
         String sql = "UPDATE credencialAcceso SET id_usuario=?, fecha_creacion=?, contrasenia=? WHERE id_credencial=?";
 
         try (Connection conn = DatabaseConnection.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, cred.getIdUsuario());
 
             // LocalDate → java.sql.Date
-            stmt.setDate(2,  new java.sql.Date(cred.getFechaCreacion().getTime()));
+            stmt.setDate(2, new java.sql.Date(cred.getFechaCreacion().getTime()));
 
             stmt.setString(3, cred.getContrasenia());
             stmt.setInt(4, cred.getIdCredencial());
@@ -142,31 +158,34 @@ public class CredencialAccesoDao implements GenericDao<CredencialAcceso> {
         }
     }
 
-
-    /* ====================================================
-       MÉTODO ELIMINAR (BAJA LÓGICA)
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO ELIMINAR (BAJA LÓGICA)
+     * ====================================================
+     */
     @Override
     public void eliminar(Long id) throws Exception {
         String sql = "UPDATE credencialAcceso SET eliminado = TRUE WHERE id_credencial = ?";
 
         try (Connection conn = DatabaseConnection.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
             stmt.executeUpdate();
         }
     }
-    /* ====================================================
-       MÉTODO RECUPERAR 
-       ==================================================== */
-    
+    /*
+     * ====================================================
+     * MÉTODO RECUPERAR
+     * ====================================================
+     */
+
     @Override
-    public void recuperar (Long id) throws Exception {
+    public void recuperar(Long id) throws Exception {
         String sql = "UPDATE credencialAcceso SET eliminado = FALSE WHERE id_credencial = ?";
 
         try (Connection conn = DatabaseConnection.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
             stmt.executeUpdate();

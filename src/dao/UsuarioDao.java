@@ -6,8 +6,16 @@ import models.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Facundo Auciello (Comisión Ag25-2C 07)
+ * @author Ayelen Etchegoyen (Comisión Ag25-2C 07)
+ * @author Alexia Rubin (Comisión Ag25-2C 05)
+ * @author María Victoria Volpe (Comisión Ag25-2C 09)
+ */
+
 public class UsuarioDao implements GenericDao<Usuario> {
-//Insertar un usuario en la base de datos
+    // Insertar un usuario en la base de datos
 
     @Override
     public void crear(Usuario usuario) throws Exception {
@@ -16,9 +24,11 @@ public class UsuarioDao implements GenericDao<Usuario> {
         }
     }
 
-    /* ====================================================
-       MÉTODO CREAR (CONEXIÓN EXTERNA → TRANSACCIÓN)
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO CREAR (CONEXIÓN EXTERNA → TRANSACCIÓN)
+     * ====================================================
+     */
     public void crear(Usuario usuario, Connection conn) throws Exception {
         String sql = "INSERT INTO usuarios (nombre, apellido, edad, email, usuario) VALUES (?,?,?,?,?)";
 
@@ -40,10 +50,11 @@ public class UsuarioDao implements GenericDao<Usuario> {
         }
     }
 
-
-    /* ====================================================
-       MÉTODO LEER POR ID
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO LEER POR ID
+     * ====================================================
+     */
     public Usuario leer(Long id) throws Exception {
         String sql = "SELECT * FROM usuarios WHERE id_usuario = ? AND eliminado = FALSE";
         Usuario u = null;
@@ -67,17 +78,20 @@ public class UsuarioDao implements GenericDao<Usuario> {
         return u;
     }
 
-
-    /* ====================================================
-       MÉTODO LEER TODOS
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO LEER TODOS
+     * ====================================================
+     */
     @Override
     public List<Usuario> leerTodos() throws Exception {
         String sql = "SELECT * FROM usuarios WHERE eliminado = FALSE";
 
         List<Usuario> lista = new ArrayList<>();
 
-        try (Connection conn = DatabaseConnection.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = DatabaseConnection.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Usuario u = new Usuario();
@@ -94,9 +108,11 @@ public class UsuarioDao implements GenericDao<Usuario> {
         return lista;
     }
 
-    /* ====================================================
-       MÉTODO ACTUALIZAR
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO ACTUALIZAR
+     * ====================================================
+     */
     @Override
     public void actualizar(Usuario usuario) throws Exception {
         String sql = "UPDATE usuarios SET nombre=?, apellido=?, edad=?, email=?, usuario=? WHERE id_usuario=?";
@@ -114,10 +130,11 @@ public class UsuarioDao implements GenericDao<Usuario> {
         }
     }
 
-
-    /* ====================================================
-       MÉTODO ELIMINAR (BAJA LÓGICA)
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO ELIMINAR (BAJA LÓGICA)
+     * ====================================================
+     */
     @Override
     public void eliminar(Long id) throws Exception {
         String sql = "UPDATE usuarios SET eliminado = TRUE WHERE id_usuario = ?";
@@ -129,9 +146,11 @@ public class UsuarioDao implements GenericDao<Usuario> {
         }
     }
 
-    /* ====================================================
-       MÉTODO RECUPERAR
-       ==================================================== */
+    /*
+     * ====================================================
+     * MÉTODO RECUPERAR
+     * ====================================================
+     */
     @Override
     public void recuperar(Long id) throws Exception {
         String sql = "UPDATE usuarios SET eliminado = FALSE WHERE id_usuario = ?";
@@ -166,7 +185,7 @@ public class UsuarioDao implements GenericDao<Usuario> {
         return u;
     }
 
-    public Usuario buscarPorEmail(String email) throws Exception{
+    public Usuario buscarPorEmail(String email) throws Exception {
         String sql = "SELECT * FROM usuarios WHERE email = ? AND eliminado = FALSE";
         Usuario u = null;
 
@@ -189,18 +208,16 @@ public class UsuarioDao implements GenericDao<Usuario> {
         return u;
     }
 
-    public List<Usuario> buscarPorNombreApellido(String filtro) throws Exception{
-       String sql = "SELECT * FROM usuarios " +
-                 "WHERE nombre LIKE ? OR apellido LIKE ? AND eliminado = FALSE";
-        
+    public List<Usuario> buscarPorNombreApellido(String filtro) throws Exception {
+        String sql = "SELECT * FROM usuarios " +
+                "WHERE nombre LIKE ? OR apellido LIKE ? AND eliminado = FALSE";
+
         List<Usuario> lista = new ArrayList<>();
 
         try (Connection conn = DatabaseConnection.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-
-        stmt.setString(1, "%" + filtro + "%");
-        stmt.setString(2, "%" + filtro + "%");
-
+            stmt.setString(1, "%" + filtro + "%");
+            stmt.setString(2, "%" + filtro + "%");
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -211,11 +228,11 @@ public class UsuarioDao implements GenericDao<Usuario> {
                     u.setEdad(rs.getInt("edad"));
                     u.setEmail(rs.getString("email"));
                     u.setUsuario(rs.getString("usuario"));
-                    
+
                     lista.add(u);
                 }
             }
         }
         return lista;
-   }
+    }
 }

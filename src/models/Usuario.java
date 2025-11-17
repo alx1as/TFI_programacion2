@@ -1,9 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
+/**
+ *
+ * @author Facundo Auciello (Comisión Ag25-2C 07)
+ * @author Ayelen Etchegoyen (Comisión Ag25-2C 07)
+ * @author Alexia Rubin (Comisión Ag25-2C 05)
+ * @author María Victoria Volpe (Comisión Ag25-2C 09)
+ */
 
 public class Usuario extends Base {
 
@@ -74,13 +77,17 @@ public class Usuario extends Base {
     public void setCredencial(CredencialAcceso credencial) {
         this.credencial = credencial;
     }
-    public void setIdUsuario(Integer id) { setId(id); }
-    public Integer getIdUsuario() { return getId(); }
 
-  
+    public void setIdUsuario(Integer id) {
+        setId(id);
+    }
+
+    public Integer getIdUsuario() {
+        return getId();
+    }
+
     @Override
     public String toString() {
         return "Usuario [id=" + getId() + ", nombre=" + nombre + ", email=" + email + ", usuario=" + usuario + "]";
     }
 }
-

@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main;
 
 /**
  *
- * @author faacu
+ * @author Facundo Auciello (Comisión Ag25-2C 07)
+ * @author Ayelen Etchegoyen (Comisión Ag25-2C 07)
+ * @author Alexia Rubin (Comisión Ag25-2C 05)
+ * @author María Victoria Volpe (Comisión Ag25-2C 09)
  */
+
 public class MenuDisplay {
 
-/**
- * Clase utilitaria para mostrar los menus de la aplicacion.
- * Solo contiene metodos estaticos de visualizacion (no tiene estado).
- */
+    /**
+     * Clase utilitaria para mostrar los menus de la aplicacion.
+     * Solo contiene metodos estaticos de visualizacion (no tiene estado).
+     */
 
-    
     /**
      * Muestra el menu principal con todas las opciones disponibles.
      */
@@ -27,7 +26,7 @@ public class MenuDisplay {
         System.out.println("0. Salir");
         System.out.print("Ingrese una opcion: ");
     }
-    
+
     /**
      * Muestra el submenu de gestion de usuarios.
      */
@@ -41,7 +40,7 @@ public class MenuDisplay {
         System.out.println("0. Volver");
         System.out.print("Ingrese una opcion: ");
     }
-    
+
     /**
      * Muestra el submenu de gestion de credenciales.
      */
@@ -55,7 +54,7 @@ public class MenuDisplay {
         System.out.println("0. Volver");
         System.out.print("Ingrese una opcion: ");
     }
-    
+
     /**
      * Muestra el submenu de busqueda de usuarios.
      */
@@ -67,4 +66,3 @@ public class MenuDisplay {
         System.out.print("Ingrese una opcion: ");
     }
 }
-

@@ -43,10 +43,9 @@ src/
 ## Instalación
 
 1. **Configurar la base de datos**:
-Ejecutar los scripts SQL en MySQL en el siguiente orden:
-    - Primero: `src/sql_scripts/01_estructura.sql` (crea la base de datos y las tablas)
-    - Segundo: `src/sql_scripts/02_datos.sql` (inserta datos de ejemplo)
-    - 
+Ejecutar el script SQL en MySQL:
+        - `src/sql_scripts/setup.sql` (crea la base de datos y las tablas, incluye datos iniciales)
+
 2. Agregar el conector MySQL al proyecto:
 Descargar MySQL Connector/J (Platform Independent) desde dev.mysql.com e incorporarlo al proyecto:
 En NetBeans: Libraries → Add JAR/Folder → seleccionar mysql-connector-j-8.x.x.jar

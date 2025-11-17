@@ -68,18 +68,8 @@ El sistema presenta un menú interactivo con las siguientes opciones:
 
 1. **Gestionar Usuarios**: Crear, listar, actualizar y eliminar usuarios
 2. **Gestionar Credenciales**: Crear, listar, actualizar y eliminar credenciales
-3. **Buscar Usuario**: Búsqueda por ID o nombre de usuario
+3. **Buscar Usuario**: Búsqueda por email o nombre de usuario
 0. **Salir**
-
-### Validaciones
-
-- **Usuarios**: 
-  - Edad mínima: 18 años
-  - Email y nombre de usuario únicos
-  
-- **Credenciales**:
-  - Contraseña: mínimo 9 caracteres
-  - Relación 1:1 con usuario
 
 ## Patrones de Diseño
 

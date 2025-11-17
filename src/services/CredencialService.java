@@ -2,6 +2,7 @@ package services;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import dao.CredencialAccesoDao;
 import models.CredencialAcceso;
@@ -20,6 +21,9 @@ import models.CredencialAcceso;
  */
 public class CredencialService implements GenericService<CredencialAcceso> {
     private final CredencialAccesoDao credencialAccesoDao;
+
+    // Patrones para validación de contraseña
+    private static final Pattern CONTIENE_NUMERO = Pattern.compile(".*[0-9].*");
 
     public CredencialService(CredencialAccesoDao credencialAccesoDao) {
         if (credencialAccesoDao == null) {
@@ -80,7 +84,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        credencialAccesoDao.eliminar((long)id);
+        credencialAccesoDao.eliminar((long) id);
     }
 
     /**
@@ -95,7 +99,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        credencialAccesoDao.recuperar((long)id);
+        credencialAccesoDao.recuperar((long) id);
     }
 
     /**
@@ -110,7 +114,7 @@ public class CredencialService implements GenericService<CredencialAcceso> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        return credencialAccesoDao.leer((long)id);
+        return credencialAccesoDao.leer((long) id);
     }
 
     /**
@@ -126,10 +130,10 @@ public class CredencialService implements GenericService<CredencialAcceso> {
 
     /**
      * Valida los datos de una credencial de acceso.
+     * Incluye validación de fortaleza de contraseña.
      * 
      * @param credencialAcceso La credencial de acceso a validar.
      */
-
     private void validateCredencialAcceso(CredencialAcceso credencialAcceso) {
         if (credencialAcceso == null) {
             throw new IllegalArgumentException("CredencialAcceso no puede ser null");
@@ -143,8 +147,22 @@ public class CredencialService implements GenericService<CredencialAcceso> {
             throw new IllegalArgumentException("La fecha de creación no puede estar vacía");
         }
 
+        // Validación de longitud mínima
         if (credencialAcceso.getContrasenia() == null || credencialAcceso.getContrasenia().trim().length() < 8) {
             throw new IllegalArgumentException("La contraseña debe ser mayor a 8 caracteres");
+
+        }
+
+        // Validación de contraseña
+        String password = credencialAcceso.getContrasenia();
+
+        if (!CONTIENE_NUMERO.matcher(password).matches()) {
+            throw new IllegalArgumentException("La contraseña debe contener al menos un número");
+        }
+
+        // Validación de longitud máxima
+        if (password.length() > 50) {
+            throw new IllegalArgumentException("La contraseña no puede exceder los 50 caracteres");
         }
     }
 

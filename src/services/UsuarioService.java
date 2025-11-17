@@ -2,6 +2,7 @@ package services;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import config.DatabaseConnection;
 import config.TransactionManager;
@@ -34,8 +35,16 @@ import models.Usuario;
  */
 public class UsuarioService implements GenericService<Usuario> {
     private final UsuarioDao usuarioDao;
-
     private final CredencialService credencialService;
+
+    // Patrón para validación de email
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+
+    // Patrón para validación de nombres (solo letras y espacios)
+    private static final Pattern NOMBRE_PATTERN = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
+
+    // Patrón para validación de username (letras, números y guión bajo)
+    private static final Pattern USERNAME_PATTERN = Pattern.compile("^[a-zA-Z0-9_]+$");
 
     public UsuarioService(UsuarioDao usuarioDao, CredencialService credencialService) {
         if (usuarioDao == null) {
@@ -135,7 +144,7 @@ public class UsuarioService implements GenericService<Usuario> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        usuarioDao.eliminar((long)id);
+        usuarioDao.eliminar((long) id);
     }
 
     /**
@@ -150,7 +159,7 @@ public class UsuarioService implements GenericService<Usuario> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        usuarioDao.recuperar((long)id);
+        usuarioDao.recuperar((long) id);
     }
 
     /**
@@ -165,7 +174,7 @@ public class UsuarioService implements GenericService<Usuario> {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID debe ser mayor a 0");
         }
-        return usuarioDao.leer((long)id);
+        return usuarioDao.leer((long) id);
     }
 
     /**
@@ -277,7 +286,7 @@ public class UsuarioService implements GenericService<Usuario> {
             throw new IllegalArgumentException("Los IDs deben ser mayores a 0");
         }
 
-        Usuario usuario = usuarioDao.leer((long)usuarioId);
+        Usuario usuario = usuarioDao.leer((long) usuarioId);
         if (usuario == null) {
             throw new IllegalArgumentException("Usuario no encontrado con ID: " + usuarioId);
         }
@@ -298,6 +307,10 @@ public class UsuarioService implements GenericService<Usuario> {
      * Reglas de negocio aplicadas:
      * - Nombre, apellido, email, usuario y edad son obligatorios
      * - Se verifica trim() para evitar strings solo con espacios
+     * - Email debe tener formato válido
+     * - Nombre y apellido solo pueden contener letras
+     * - Username debe tener entre 4 y 30 caracteres
+     * - Edad debe estar entre 18 y 100 años
      *
      * @param usuario Usuario a validar
      * @throws IllegalArgumentException Si alguna validación falla
@@ -306,20 +319,54 @@ public class UsuarioService implements GenericService<Usuario> {
         if (usuario == null) {
             throw new IllegalArgumentException("El usuario no puede ser null");
         }
+
+        // Validación de nombre
         if (usuario.getNombre() == null || usuario.getNombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede estar vacío");
         }
+        if (usuario.getNombre().length() < 2 || usuario.getNombre().length() > 50) {
+            throw new IllegalArgumentException("El nombre debe tener entre 2 y 50 caracteres");
+        }
+        if (!NOMBRE_PATTERN.matcher(usuario.getNombre()).matches()) {
+            throw new IllegalArgumentException("El nombre solo puede contener letras");
+        }
+
+        // Validación de apellido
         if (usuario.getApellido() == null || usuario.getApellido().trim().isEmpty()) {
             throw new IllegalArgumentException("El apellido no puede estar vacío");
         }
+        if (usuario.getApellido().length() < 2 || usuario.getApellido().length() > 50) {
+            throw new IllegalArgumentException("El apellido debe tener entre 2 y 50 caracteres");
+        }
+        if (!NOMBRE_PATTERN.matcher(usuario.getApellido()).matches()) {
+            throw new IllegalArgumentException("El apellido solo puede contener letras");
+        }
+
+        // Validación de edad
         if (usuario.getEdad() == null || usuario.getEdad() < 18) {
             throw new IllegalArgumentException("El usuario debe tener por lo menos 18 años");
         }
-        if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty() || !usuario.getEmail().contains("@")) {
+        if (usuario.getEdad() > 100) {
+            throw new IllegalArgumentException("La edad debe ser menor a 100 años");
+        }
+
+        // Validación de email
+        if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
             throw new IllegalArgumentException("El email no puede estar vacío");
         }
+        if (!EMAIL_PATTERN.matcher(usuario.getEmail()).matches()) {
+            throw new IllegalArgumentException("El email no tiene un formato válido");
+        }
+
+        // Validación de username
         if (usuario.getUsuario() == null || usuario.getUsuario().trim().isEmpty()) {
-            throw new IllegalArgumentException("El usuario debe tener un email válido");
+            throw new IllegalArgumentException("El nombre de usuario no puede estar vacío");
+        }
+        if (usuario.getUsuario().length() < 4 || usuario.getUsuario().length() > 30) {
+            throw new IllegalArgumentException("El nombre de usuario debe tener entre 4 y 30 caracteres");
+        }
+        if (!USERNAME_PATTERN.matcher(usuario.getUsuario()).matches()) {
+            throw new IllegalArgumentException("El nombre de usuario solo puede contener letras, números y guión bajo");
         }
     }
 
